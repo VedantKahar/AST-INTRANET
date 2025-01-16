@@ -1,0 +1,264 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/HomepageStyles.css")">
+</head>
+<body>
+
+    <div class="sidebar" id="sidebar">
+        <h2>
+            <img src="~/Images/icons/menu.png" alt="Toggle Sidebar" id="toggleSidebar">
+            <!--<a href="https://youtube.com" target="_blank" id="companyLink"><span>Advanced Sys-Tek</span></a> --> <!-- Make this clickable, no hover/animation -->
+            <span>Advanced Sys-Tek</span>
+        </h2>
+        <hr>
+
+        <a href="@Url.Action("dashboardView", "Dashboard")">
+            <img src="~/Images/icons/dashboard-icon.png" alt="Dashboard Icon"> <span>Dashboard</span>
+        </a>
+        <a href="@Url.Action("EmployeesView", "Employees")">
+            <img src="~/Images/icons/employees-icon.png" alt="Employees Icon"> <span>Employees</span>
+        </a>
+        <a href="@Url.Action("UpdatesView", "Updates")">
+            <img src="~/Images/icons/today-icon.png" alt="Updates Icon"> <span>Today's Updates</span>
+        </a>
+        <a href="@Url.Action("TownhallView", "Townhall")">
+            <img src="~/Images/icons/meeting-icon.png" alt="Meeting Icon"> <span>Town Hall</span>
+        </a>
+        <a href="@Url.Action("ResourcesView", "Resources")">
+            <img src="~/Images/icons/resources-icon.png" alt="Resources Icon"> <span>Resources</span>
+        </a>
+        <a href="@Url.Action("ManualsView", "ManualsController")">
+            <img src="~/Images/icons/manual-icon.png" alt="Manual Icon"> <span>Manuals</span>
+        </a>
+        <a href="@Url.Action("AchievementsView", "AchievementsController")">
+            <img src="~/Images/icons/achievements-icon.png" alt="Achievements Icon"> <span>Achievements</span>
+        </a>
+        <a href="@Url.Action("PoliciesView", "PoliciesController")">
+            <img src="~/Images/icons/policies-icon.png" alt="Policies Icon"> <span>Policies</span>
+        </a>
+        <a href="@Url.Action("EventsView", "EventsController")">
+            <img src="~/Images/icons/events-icon.png" alt="Events Icon"> <span>Events</span>
+        </a>
+        <a href="@Url.Action("LoginView", "AccountsController")">
+            <img src="~/Images/icons/logout-icon.png" alt="Log Out Icon"> <span>Log Out</span>
+        </a>
+
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <img src="~/Images/images/AST-Logo.png" alt="AST logo">
+            <input type="text" placeholder="Search anything...">
+
+            @*<form action="@Url.Action("Search", "Home")" method="get" class="search-form">
+                <input type="text" name="query" placeholder="Search anything..." class="search-input">
+                <button type="submit" class="search-button">Search</button>
+            </form>*@
+
+            <!-- Profile container -->
+            <div class="profile-container">
+                <img src="~/Images/images/profile-pic.jfif" alt="Profile Picture" class="profile-img">
+                <span class="user-name">@User.Identity.Name</span>
+
+            </div>
+        </div>
+
+        <div class="hero-section" style="background-image: url('~/Images/images/hompage-bg.avif'); ">
+            <div class="hero-content">
+                <h1>Advanced Sys-Tek Limited</h1>
+                <p>
+                    Advanced Sys-Tek Limited is a leading innovator in the Oil & Gas industry,<br />
+                    specializing in Fluid Metering and Terminal Automation Systems.
+                </p>
+                <p>
+                    Headquartered in India with a growing global presence, we deliver turnkey solutions
+                    in Measurement, Control, and Automation through expert system integration, manufacturing,
+                    and software development.
+                </p>
+                <a href="https://www.advancedsystek.com/" target="_blank" class="hero-link">
+                    Discover More
+                </a>
+            </div>
+        </div>
+        <br /><br />
+
+        <hr>
+        <h2 class="centered-title">Our Subsidiaries</h2>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-logo-container">
+                    <img src="https://astenviron.com/wp-content/uploads/2024/08/products.webp" alt="AST Environment Logo" class="card-logo">
+                </div>
+                <div class="card-content">
+                    <h3>AST Environment Solution</h3>
+                    <p>
+                        A prominent manufacturer of Diesel Exhaust Fluid (DEF) plants. Having over two decades of experience in Terminal Automation and Metering Skids.
+                    </p>
+                    <a href="https://astenviron.com/" target="_blank">Visit Website</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-logo-container">
+                    <img src="../images/Terra-Logo.png" alt="Terranomous Logo" class="card-logo">
+                </div>
+                <div class="card-content">
+                    <h3>Terranomous</h3>
+                    <p>
+                        It delivers high-quality and innovative defense and military technologies that exceed the expectations of our clients.
+                    </p>
+                    <a href="https://terranomous.in/" target="_blank">Visit Website</a>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <!-- Important Announcements Section -->
+        <section class="announcements">
+            <h3>Important Announcements</h3>
+            <ul>
+                <li>Recent order received: <b>XYZ System for $2 million.</b></li>
+                <li>Prabhas Awarded <b>"Best Innovator 2024."</b></li>
+            </ul>
+        </section>
+
+        <hr>
+
+        <section class="section">
+            <h2>Our Portals</h2>
+            <div class="stats">
+                <div>
+                    <a href="your-link-here" target="_blank" class="clickable-box">
+                        <span class="portal-name">Eresource</span>
+                        <p class="description">Access a wide range of digital resources and services.</p>
+                        <h4>Open Portal</h4>
+                    </a>
+                    <a href="https://www.youtube.com/" target="_blank">
+                        <button class="open-manual-btn">Open Manual</button>
+                    </a>
+                </div>
+                <div>
+                    <a href="your-link-here" target="_blank" class="clickable-box">
+                        <span class="portal-name">Spine HR</span>
+                        <p class="description">Manage human resources and employee data efficiently.</p>
+                        <h4>Open Portal</h4>
+                    </a>
+                    <a href="https://www.youtube.com/" target="_blank">
+                        <button class="open-manual-btn">Open Manual</button>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="your-link-here" target="_blank" class="clickable-box">
+                        <span class="portal-name">CIM</span>
+                        <p class="description">Centralized system for inventory and material management.</p>
+                        <h4>Open Portal</h4>
+                    </a>
+                    <a href="https://www.youtube.com/" target="_blank">
+                        <button class="open-manual-btn">Open Manual</button>
+                    </a>
+                </div>
+
+                <div>
+                    <a href="your-link-here" target="_blank" class="clickable-box">
+                        <span class="portal-name">CRR</span>
+                        <p class="description">Track and manage customer relationship records easily.</p>
+                        <h4>Open Portal</h4>
+                    </a>
+                    <a href="https://www.youtube.com/" target="_blank">
+                        <button class="open-manual-btn">Open Manual</button>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="section">
+            <h2>Orders Overview</h2>
+            <div class="stats">
+                <div>
+                    <h3>150</h3>
+                    <p>Orders Received</p>
+                </div>
+                <div>
+                    <h3>$1.5M</h3>
+                    <p>Order Value</p>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+        <section class="manuals">
+            <h2>Manuals</h2>
+            <div class="manual-list">
+                <div class="manual-item">
+                    <a href="#" class="manual-link">
+                        <h3>Induction Manual</h3>
+                        <p class="manual-description">A comprehensive guide designed to introduce new employees to Advanced SysTek Limited's policies, culture, and operational procedures.</p>
+                    </a>
+                </div>
+                <div class="manual-item">
+                    <a href="#" class="manual-link">
+                        <h3>Exit Manual</h3>
+                        <p class="manual-description">A detailed manual outlining the steps and requirements for employees leaving Advanced SysTek Limited, ensuring a smooth and organized transition.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section class="section">
+            <h2>Events</h2>
+            <div class="event-gallery">
+                <div class="event-item">
+                    <a href="https://link-to-event1.com" target="_blank">
+                        <img src="https://media.licdn.com/dms/image/v2/D4D22AQGobAIxlOHYKg/feedshare-shrink_800/feedshare-shrink_800/0/1729238416221?e=2147483647&v=beta&t=rlgNJodfrokBuBaLoj-Ghu56o9QtbA2H0zBIQI0fq4Y" alt="Garba">
+                        <h3 class="event-title">Garba</h3>
+                        <p class="event-description">
+                            A lively traditional dance event celebrating the festival of Navratri.
+                        </p>
+                    </a>
+                </div>
+                <div class="event-item">
+                    <a href="https://link-to-event2.com" target="_blank">
+                        <img src="https://media.licdn.com/dms/image/v2/D4D22AQGeeOIbO_5Cnw/feedshare-shrink_800/feedshare-shrink_800/0/1727068347298?e=2147483647&v=beta&t=lMaagA73msBfbfGEvnKA1IUZbhCkrlUFzlshW1C_RHQ" alt="BVM Industrial Visit">
+                        <h3 class="event-title">BVM Industrial Visit</h3>
+                        <p class="event-description">
+                            A tour to explore industrial advancements and innovations.
+                        </p>
+                    </a>
+                </div>
+                <div class="event-item">
+                    <a href="https://link-to-event3.com" target="_blank">
+                        <img src="https://media.licdn.com/dms/image/v2/D4D22AQFHpmWf-sNCrA/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1723705015505?e=2147483647&v=beta&t=nl4jgJGy5eW_tY1M8EuUmMz4tMll1hMQ2Ls25907F0k" alt="Independence Day">
+                        <h3 class="event-title">Independence Day</h3>
+                        <p class="event-description">A celebration of freedom and patriotism.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        &copy; 2024 Advanced Sys-Tek Limited | Contact Us | Feedback
+    </footer>
+
+    <!-- Link to the JavaScript file -->
+    <script src="@Url.Content("~/Scripts/script/HomepageScript.js")"></script>
+
+</body>
+</html>

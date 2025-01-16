@@ -1,0 +1,170 @@
+﻿
+
+
+@{
+           Layout = null;
+        
+}
+
+
+@*ViewBag.Title = "employeesView";
+    *@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/EmployeesStyles.css")">
+
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <h2>
+            <img src="../icons/menu.png" alt="Toggle Sidebar" id="toggleSidebar">
+            <span>Advanced Sys-Tek</span>
+        </h2>
+
+        <hr>
+        <a href="@Url.Action("dashboardView", "Dashboard")">
+            <img src="~/Images/icons/dashboard-icon.png" alt="Dashboard Icon"> <span>Dashboard</span>
+        </a>
+        <a href="@Url.Action("EmployeesView", "Employees")">
+            <img src="~/Images/icons/employees-icon.png" alt="Employees Icon"> <span>Employees</span>
+        </a>
+        <a href="@Url.Action("UpdatesView", "Updates")">
+            <img src="~/Images/icons/today-icon.png" alt="Updates Icon"> <span>Today's Updates</span>
+        </a>
+        <a href="@Url.Action("TownhallView", "Townhall")">
+            <img src="~/Images/icons/meeting-icon.png" alt="Meeting Icon"> <span>Town Hall</span>
+        </a>
+        <a href="@Url.Action("ResourcesView", "Resources")">
+            <img src="~/Images/icons/resources-icon.png" alt="Resources Icon"> <span>Resources</span>
+        </a>
+        <a href="@Url.Action("ManualsView", "ManualsController")">
+            <img src="~/Images/icons/manual-icon.png" alt="Manual Icon"> <span>Manuals</span>
+        </a>
+        <a href="@Url.Action("AchievementsView", "AchievementsController")">
+            <img src="~/Images/icons/achievements-icon.png" alt="Achievements Icon"> <span>Achievements</span>
+        </a>
+        <a href="@Url.Action("PoliciesView", "PoliciesController")">
+            <img src="~/Images/icons/policies-icon.png" alt="Policies Icon"> <span>Policies</span>
+        </a>
+        <a href="@Url.Action("EventsView", "EventsController")">
+            <img src="~/Images/icons/events-icon.png" alt="Events Icon"> <span>Events</span>
+        </a>
+        <a href="@Url.Action("LoginView", "AccountsController")">
+            <img src="~/Images/icons/logout-icon.png" alt="Log Out Icon"> <span>Log Out</span>
+        </a>
+    </div>
+
+
+    <div class="main-content">
+        <div class="header">
+            <img src="../images/AST Logo.png" alt="AST logo">
+            <input type="text" placeholder="Search anything...">
+
+            <!-- Profile container -->
+            <div class="profile-container">
+                <img src="../images/profile-pic.jfif" alt="Profile Picture" class="profile-img">
+                <span class="user-name">q</span>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Graph Container Below Header -->
+            <div class="chart-container">
+                <canvas id="employeeChart"></canvas>
+            </div>
+
+            <!-- Dropdown for selecting graph type and year range -->
+            <div class="graph-toggle-year">
+                <div class="graph-toggle">
+                    <label for="graphType" class="tooltip" data-tooltip="Select graph to view either gender distribution or employees per department.">
+                        Select Graph:
+                    </label>
+                    <select id="graphType">
+                        <option value="department">Employees per Department</option>
+                        <option value="gender">Male/Female Distribution</option>
+                    </select>
+                </div>
+
+                <!-- HTML for Year Selection -->
+                <div class="year-selector">
+                    <label for="startYear">Start Year:</label>
+                    <select id="startYear">
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                    </select>
+
+                    <label for="endYear">End Year:</label>
+                    <select id="endYear">
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <br />
+
+      
+
+        <!-- Displaying Employee Count and Departments Info -->
+        <div class="employee-count-box">
+            <div>
+                <h3>Total Employees</h3>
+                <p id="totalEmployees">TotalEmployees</p>  <!-- Correct way to reference model properties -->
+            </div>
+            <div>
+                <h3>New Joiners</h3>
+                <p id="newJoiners">NewJoiners</p>  <!-- Correct way to reference model properties -->
+            </div>
+            <div>
+                <h3>Departments</h3>
+                <p id="totalDepartments">TotalDepartments</p>  <!-- Correct way to reference model properties -->
+            </div>
+        </div>
+
+        <!-- Container for Departments -->
+        @*<div class="department-container">
+            @if (Model.Departments != null && Model.Departments.Any())
+            {
+                foreach (var department in Model.Departments)
+                {
+                    <div class="department" id="@department.DEPT_NAME" onclick="goToDepartment('@department.DEPT_NAME')">
+                        <h3>@department.DEPT_NAME</h3><hr />
+                        <p>Short Description of the @department.DEPT_NAME Department.</p>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No departments available.</p>
+            }
+        </div>*@
+
+
+
+    </div>
+
+    <footer class="footer">
+        &copy; 2024 Advanced Sys-Tek Limited | Contact Us | Feedback
+    </footer>
+
+    <!-- Link to the JavaScript file -->
+    <script src="@Url.Content("~/Scripts/script/EmployeesScript.js")"></script>
+
+</body>
+</html>
