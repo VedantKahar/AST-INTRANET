@@ -14,7 +14,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-
 </head>
 <body>
     <div class="sidebar" id="sidebar">
@@ -56,7 +55,6 @@
         </a>
     </div>
 
-
     <div class="main-content">
         <div class="header">
             <img src="~/Images/images/AST Logo.png" alt="AST logo">
@@ -64,7 +62,7 @@
 
             <!-- Profile container -->
             <div class="profile-container">
-                <img src="../images/profile-pic.jfif" alt="Profile Picture" class="profile-img">
+                <img src="~/Images/profile-pic.jfif" alt="Profile Picture" class="profile-img">
                 <span class="user-name">q</span>
             </div>
         </div>
@@ -129,25 +127,25 @@
             </div>
         </div>
 
-
         <div class="department-container">
             @if (ViewBag.Departments != null)
             {
                 foreach (var department in ViewBag.Departments)
                 {
-    <div class="department" id="@department.Replace(" ", "")Dept">
-        <h3>
-            <a href="javascript:void(0);" onclick="showEmployees('@department')">
-                @department
-            </a>
-        </h3>
-        <hr />
-        <p>Short description of the @department department.</p>
-    </div> }
+                    <div class="department" id="@department.Replace(" ", "")Dept">
+                        <h3>
+                            <!-- Update the link to navigate to the EmployeesByDepartment action -->
+                            <a href="@Url.Action("EmployeesByDepartment", "Employees", new { departmentName = department })"> @department </a>
+                        </h3>
+                        <hr />
+                        <p>Short description of the @department department.</p>
+                    </div>
                 }
-                else
-                {
-    <p>No departments available.</p>}
+            }
+            else
+            {
+                <p>No departments available.</p>
+            }
         </div>
 
         <!-- Modal for showing employees -->
@@ -162,7 +160,6 @@
                             <th>Employee Name</th>
                             <th>Designation</th>
                             <th>Email</th>
-                            <!-- Add more headers dynamically -->
                         </tr>
                     </thead>
                     <tbody id="employeeTableBody">
@@ -180,6 +177,5 @@
 
     <!-- Link to the JavaScript file -->
     <script src="@Url.Content("~/Scripts/script/EmployeesScript.js")"></script>
-
 </body>
 </html>

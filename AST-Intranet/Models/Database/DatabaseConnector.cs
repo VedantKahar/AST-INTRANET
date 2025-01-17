@@ -93,7 +93,7 @@ namespace AST_Intranet.Models.Database
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
                     connection.Open(); // Open connection
-                    string query = "SELECT emp_name FROM cim_emp_master"; // Select all columns
+                    string query = "SELECT * FROM cim_emp_master"; // Select all columns
 
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {

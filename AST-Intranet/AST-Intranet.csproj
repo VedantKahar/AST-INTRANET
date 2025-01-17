@@ -159,6 +159,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\AchievementsController.cs" />
+    <Compile Include="Controllers\AllowCrossSiteJsonAttribute.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
@@ -227,6 +228,7 @@
     <Content Include="Views\accounts\loginView.cshtml" />
     <Content Include="Views\accounts\signupView.cshtml" />
     <Content Include="Views\accounts\forgotpasswordView.cshtml" />
+    <Content Include="Views\Employees\EmployeesByDepartment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

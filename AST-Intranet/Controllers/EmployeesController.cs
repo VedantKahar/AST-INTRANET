@@ -1,7 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using AST_Intranet.Models;
 using AST_Intranet.Models.Database;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AST_Intranet.Controllers
 {
@@ -26,10 +28,20 @@ namespace AST_Intranet.Controllers
         }
 
         // GET: Employees by Department
-        public JsonResult GetEmployeesByDepartment(string departmentName)
+        // Action to display employees by department
+        public ActionResult EmployeesByDepartment(string departmentName)
         {
+            // Debug the department name
+            Console.WriteLine($"Department Name: {departmentName}");
+
+            // Fetch the employees based on the department name
             var employees = EmployeeDBConnector.GetEmployeesByDepartment(departmentName);
-            return Json(employees, JsonRequestBehavior.AllowGet);
+
+            Console.WriteLine($"Employees Count for {departmentName}: {employees.Count}");
+
+            // Pass the list of employees and department name to the view
+            ViewBag.DepartmentName = departmentName;
+            return View(employees);
         }
 
     }

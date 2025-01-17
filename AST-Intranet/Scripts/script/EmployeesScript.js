@@ -289,40 +289,45 @@
         startYearSelect.addEventListener('change', updateChart);
         endYearSelect.addEventListener('change', updateChart);
 
-function showEmployees(department) {
-    // Log the generated URL
-    console.log('@Url.Action("GetEmployeesByDepartment", "Employees")');
-        console.log(department);  // Check if this is printed when a department is clicked
-        $.ajax({
-            url: '@Url.Action("GetEmployeesByDepartment", "Employees")',
-            data: { departmentName: department },
-            type: 'GET',
-            success: function (data) {
-                var tableBody = $("#employeeTableBody");
-                tableBody.empty(); // Clear any previous rows
 
-                if (data.length > 0) {
-                    data.forEach(function (employee) {
-                        var row = "<tr>";
-                        row += "<td>" + employee.EmpCode + "</td>";
-                        row += "<td>" + employee.EmpName + "</td>";
-                        row += "<td>" + employee.Designation + "</td>";
-                        row += "<td>" + employee.Email + "</td>";
-                        row += "</tr>";
-                        tableBody.append(row);
-                    });
-                    document.getElementById("employeeModal").style.display = "block";
-                } else {
-                    tableBody.append("<tr><td colspan='4'>No employees found</td></tr>");
-                    document.getElementById("employeeModal").style.display = "block";
-                }
-            },
-            error: function () {
-                alert('Error fetching employee data');
-            }
-        });
-    }
- 
-    function closeModal() {
-        document.getElementById("employeeModal").style.display = "none";
-    } 
+//console.log("EmployeesScript.js loaded");
+
+//// Now define showEmployees
+//var getEmployeesUrl = '@Url.Action("GetEmployeesByDepartment", "Employees")';
+
+//function showEmployees(department) {
+//    console.log("showEmployees called with department: ", department);
+//    $.ajax({
+//        url: getEmployeesUrl,
+//        data: { departmentName: department },
+//        type: 'GET',
+//        success: function (data) {
+//            console.log("Employees Data: ", data); // Log data to see if it's correct
+//            var tableBody = $("#employeeTableBody");
+//            tableBody.empty(); // Clear any previous rows
+
+//            if (data.length > 0) {
+//                data.forEach(function (employee) {
+//                    var row = "<tr>";
+//                    row += "<td>" + employee.EmpCode + "</td>";
+//                    row += "<td>" + employee.EmpName + "</td>";
+//                    row += "<td>" + employee.Designation + "</td>";
+//                    row += "<td>" + employee.Email + "</td>";
+//                    row += "</tr>";
+//                    tableBody.append(row);
+//                });
+//                document.getElementById("employeeModal").style.display = "block";
+//            } else {
+//                tableBody.append("<tr><td colspan='4'>No employees found</td></tr>");
+//                document.getElementById("employeeModal").style.display = "block";
+//            }
+//        },
+
+//        error: function () {
+//            alert('Error fetching employee data');
+//        }
+//    });
+//}
+//function closeModal() {
+//    document.getElementById("employeeModal").style.display = "none";
+//}

@@ -118,6 +118,7 @@ namespace AST_Intranet.Models.Database
             return departments;
         }
         // Method to get all employees from a specific department
+
         public static List<Employee> GetEmployeesByDepartment(string departmentName)
         {
             List<Employee> employees = new List<Employee>();
@@ -127,11 +128,7 @@ namespace AST_Intranet.Models.Database
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
                     connection.Open();
-                    string query = @"SELECT e.EMP_CODE, e.EMP_NAME, e.DESIGNATION, e.DOB, e.DOJ, e.DOL, e.DOR, 
-                             e.EMAIL, e.STATUS, e.PHONE_NO, e.EMP_TYPE, e.AGENCY_NAME, e.DEPUTED_FOR, 
-                             e.LOCATION, e.MANAGER_CODE, e.CIM_LOGIN_PASSWORD, e.ADDRESS, e.RESIGN_SOURCE, 
-                             e.EMP_GROUP, e.BLOOD_GROUP, e.EXT_NO, e.ENTITY_CODE, e.GENDER, e.REMARKS, 
-                             e.EMAIL_PERSONAL
+                    string query = @"SELECT e.*, d.* 
                              FROM cim_emp_master e
                              JOIN department_master d
                              ON e.DEPARTMENT = d.DEPT_ID
@@ -144,35 +141,30 @@ namespace AST_Intranet.Models.Database
                         {
                             while (reader.Read())
                             {
-                                Employee emp = new Employee
+                                Employee emp = new Employee();
+
+                                // Loop through all columns in the reader and map them to the Employee object
+                                for (int i = 0; i < reader.FieldCount; i++)
                                 {
-                                    EmpCode = reader.GetInt32(reader.GetOrdinal("EMP_CODE")),
-                                    EmpName = reader.GetString(reader.GetOrdinal("EMP_NAME")),
-                                    Designation = reader.GetString(reader.GetOrdinal("DESIGNATION")),
-                                    Dob = reader.GetDateTime(reader.GetOrdinal("DOB")),
-                                    Doj = reader.GetDateTime(reader.GetOrdinal("DOJ")),
-                                    Dol = reader.IsDBNull(reader.GetOrdinal("DOL")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("DOL")),
-                                    Dor = reader.IsDBNull(reader.GetOrdinal("DOR")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("DOR")),
-                                    Email = reader.GetString(reader.GetOrdinal("EMAIL")),
-                                    Status = reader.GetInt32(reader.GetOrdinal("STATUS")),
-                                    PhoneNo = reader.GetString(reader.GetOrdinal("PHONE_NO")),
-                                    EmpType = reader.GetInt32(reader.GetOrdinal("EMP_TYPE")),
-                                    AgencyName = reader.GetString(reader.GetOrdinal("AGENCY_NAME")),
-                                    DeputedFor = reader.GetString(reader.GetOrdinal("DEPUTED_FOR")),
-                                    Location = reader.GetString(reader.GetOrdinal("LOCATION")),
-                                    ManagerCode = reader.GetInt32(reader.GetOrdinal("MANAGER_CODE")),
-                                    CimLoginPassword = reader.GetString(reader.GetOrdinal("CIM_LOGIN_PASSWORD")),
-                                    Address = reader.GetString(reader.GetOrdinal("ADDRESS")),
-                                    ResignSource = reader.GetString(reader.GetOrdinal("RESIGN_SOURCE")),
-                                    EmpGroup = reader.GetInt32(reader.GetOrdinal("EMP_GROUP")),
-                                    BloodGroup = reader.GetString(reader.GetOrdinal("BLOOD_GROUP")),
-                                    ExtNo = reader.GetString(reader.GetOrdinal("EXT_NO")),
-                                    EntityCode = reader.GetInt32(reader.GetOrdinal("ENTITY_CODE")),
-                                    Gender = reader.GetString(reader.GetOrdinal("GENDER")),
-                                    Remarks = reader.GetString(reader.GetOrdinal("REMARKS")),
-                                    EmailPersonal = reader.GetString(reader.GetOrdinal("EMAIL_PERSONAL"))
-                                };
-                                employees.Add(emp);
+                                    string columnName = reader.GetName(i);  // Get the column name
+                                    object columnValue = reader.GetValue(i); // Get the column value
+
+                                    // Match the column name with the Employee property
+                                    var property = typeof(Employee).GetProperty(columnName,
+                                                System.Reflection.BindingFlags.Public |
+                                                System.Reflection.BindingFlags.Instance);
+
+                                    // If no match is found in the class, print a debug message
+                                    if (property == null)
+                                    {
+                                        Console.WriteLine($"No matching property found for column: {columnName}");
+                                    }
+                                    else if (columnValue != DBNull.Value)
+                                    {
+                                        property.SetValue(emp, Convert.ChangeType(columnValue, property.PropertyType));
+                                    }
+                                }
+                                employees.Add(emp); // Add the employee to the list
                             }
                         }
                     }
@@ -184,6 +176,7 @@ namespace AST_Intranet.Models.Database
             }
             return employees;
         }
+
 
     }
 }
