@@ -1,14 +1,6 @@
-﻿
-
-
-@{
-           Layout = null;
-        
+﻿@{
+    Layout = null;
 }
-
-
-@*ViewBag.Title = "employeesView";
-    *@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,12 +12,14 @@
 
     <!-- Include Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
 </head>
 <body>
     <div class="sidebar" id="sidebar">
         <h2>
-            <img src="../icons/menu.png" alt="Toggle Sidebar" id="toggleSidebar">
+            <img src="~/Images/icons/menu.png" alt="Toggle Sidebar" id="toggleSidebar">
             <span>Advanced Sys-Tek</span>
         </h2>
 
@@ -65,7 +59,7 @@
 
     <div class="main-content">
         <div class="header">
-            <img src="../images/AST Logo.png" alt="AST logo">
+            <img src="~/Images/images/AST Logo.png" alt="AST logo">
             <input type="text" placeholder="Search anything...">
 
             <!-- Profile container -->
@@ -119,43 +113,64 @@
         <hr />
         <br />
 
-      
-
-        <!-- Displaying Employee Count and Departments Info -->
+        <!-- Display Employee Count and Departments -->
         <div class="employee-count-box">
             <div>
                 <h3>Total Employees</h3>
-                <p id="totalEmployees">TotalEmployees</p>  <!-- Correct way to reference model properties -->
+                <p>@ViewBag.TotalEmployees</p>
             </div>
             <div>
                 <h3>New Joiners</h3>
-                <p id="newJoiners">NewJoiners</p>  <!-- Correct way to reference model properties -->
+                <p>@ViewBag.NewJoiners</p>
             </div>
             <div>
                 <h3>Departments</h3>
-                <p id="totalDepartments">TotalDepartments</p>  <!-- Correct way to reference model properties -->
+                <p>@ViewBag.TotalDepartments</p>
             </div>
         </div>
 
-        <!-- Container for Departments -->
-        @*<div class="department-container">
-            @if (Model.Departments != null && Model.Departments.Any())
+
+        <div class="department-container">
+            @if (ViewBag.Departments != null)
             {
-                foreach (var department in Model.Departments)
+                foreach (var department in ViewBag.Departments)
                 {
-                    <div class="department" id="@department.DEPT_NAME" onclick="goToDepartment('@department.DEPT_NAME')">
-                        <h3>@department.DEPT_NAME</h3><hr />
-                        <p>Short Description of the @department.DEPT_NAME Department.</p>
-                    </div>
+    <div class="department" id="@department.Replace(" ", "")Dept">
+        <h3>
+            <a href="javascript:void(0);" onclick="showEmployees('@department')">
+                @department
+            </a>
+        </h3>
+        <hr />
+        <p>Short description of the @department department.</p>
+    </div> }
                 }
-            }
-            else
-            {
-                <p>No departments available.</p>
-            }
-        </div>*@
+                else
+                {
+    <p>No departments available.</p>}
+        </div>
 
-
+        <!-- Modal for showing employees -->
+        <div id="employeeModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Employees in Selected Department</h2>
+                <table id="employeeTable">
+                    <thead>
+                        <tr>
+                            <th>Employee Code</th>
+                            <th>Employee Name</th>
+                            <th>Designation</th>
+                            <th>Email</th>
+                            <!-- Add more headers dynamically -->
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTableBody">
+                        <!-- Dynamic employee rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
     </div>
 

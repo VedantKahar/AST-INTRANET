@@ -2,13 +2,14 @@
   "ExpandedNodes": [
     "",
     "\\AST-Intranet",
-    "\\AST-Intranet\\App_Start",
-    "\\AST-Intranet\\Controllers",
-    "\\AST-Intranet\\Images",
-    "\\AST-Intranet\\Images\\images",
+    "\\AST-Intranet\\Content",
+    "\\AST-Intranet\\Content\\css",
+    "\\AST-Intranet\\Models",
+    "\\AST-Intranet\\Models\\Database",
+    "\\AST-Intranet\\Scripts",
+    "\\AST-Intranet\\Scripts\\script",
     "\\AST-Intranet\\Views",
-    "\\AST-Intranet\\Views\\Dashboard",
-    "\\AST-Intranet\\Views\\Home"
+    "\\AST-Intranet\\Views\\Employees"
   ],
   "SelectedNode": "\\AST-Intranet.sln",
   "PreviewInSolutionExplorer": false

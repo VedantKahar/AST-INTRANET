@@ -10,29 +10,27 @@ namespace AST_Intranet.Controllers
         // GET: employeesView
         public ActionResult employeesView()
         {
-            return View();
-        }
-
-        public ActionResult Index()
-        {
-            // Fetch the required data from the database
+            // Fetch data from the database
             int totalEmployees = EmployeeDBConnector.GetTotalEmployees();
             int newJoiners = EmployeeDBConnector.GetNewJoiners();
             int totalDepartments = EmployeeDBConnector.GetTotalDepartments();
-            List<EmployeeDBConnector.Department> departments = EmployeeDBConnector.GetDepartments();
+            var departments = EmployeeDBConnector.GetDepartments();
 
-            // Create the view model
-            var model = new EmployeeViewModel
-            {
-                TotalEmployees = totalEmployees,
-                NewJoiners = newJoiners,
-                TotalDepartments = totalDepartments,
-                Departments = departments
-            };
+            // Pass data to the view using ViewBag
+            ViewBag.TotalEmployees = totalEmployees;
+            ViewBag.NewJoiners = newJoiners;
+            ViewBag.TotalDepartments = totalDepartments;
+            ViewBag.Departments = departments;
 
-            return View(model);  // Ensure model is passed to the view
+            return View();
         }
 
+        // GET: Employees by Department
+        public JsonResult GetEmployeesByDepartment(string departmentName)
+        {
+            var employees = EmployeeDBConnector.GetEmployeesByDepartment(departmentName);
+            return Json(employees, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

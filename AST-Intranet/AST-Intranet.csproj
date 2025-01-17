@@ -170,7 +170,7 @@
     </Compile>
     <Compile Include="Models\Database\DatabaseConnector.cs" />
     <Compile Include="Models\Database\EmployeeDBConnector.cs" />
-    <Compile Include="Models\EmployeeViewModel.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
