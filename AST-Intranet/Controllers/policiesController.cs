@@ -9,7 +9,7 @@ namespace AST_Intranet.Controllers
     public class policiesController : Controller
     {
         // GET: policies
-        public ActionResult Index()
+        public ActionResult PoliciesView()
         {
             return View();
         }

@@ -118,9 +118,10 @@ namespace AST_Intranet.Models.Database
             return departments;
         }
 
-        public static List<Employee> GetEmployeesByDepartment(int departmentId)
+
+        public static List<Dictionary<string, object>> GetEmployeesByDepartment(int departmentId, int page, int pageSize)
         {
-            List<Employee> employees = new List<Employee>();
+            List<Dictionary<string, object>> employees = new List<Dictionary<string, object>>();
 
             try
             {
@@ -129,26 +130,31 @@ namespace AST_Intranet.Models.Database
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT * FROM cim_emp_master WHERE DEPARTMENT = :departmentId";
+
+                    // Calculate the starting row for pagination
+                    int startRow = (page - 1) * pageSize;
+
+                    string query = "SELECT * FROM (SELECT emp.*, ROWNUM AS rn FROM cim_emp_master emp WHERE DEPARTMENT = :departmentId) WHERE rn BETWEEN :startRow AND :endRow";
 
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {
                         command.Parameters.Add(new OracleParameter("departmentId", departmentId));
+                        command.Parameters.Add(new OracleParameter("startRow", startRow + 1));  // Oracle ROWNUM starts from 1
+                        command.Parameters.Add(new OracleParameter("endRow", startRow + pageSize));
 
                         using (OracleDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                employees.Add(new Employee
+                                var employee = new Dictionary<string, object>();
+                                for (int i = 0; i < reader.FieldCount; i++)
                                 {
-                                    EmpCode = reader.GetInt32(reader.GetOrdinal("EMP_CODE")),
-                                    EmpName = reader.GetString(reader.GetOrdinal("EMP_NAME")),
-                                    Designation = reader.GetString(reader.GetOrdinal("DESIGNATION")),
-                                    Dob = reader.GetDateTime(reader.GetOrdinal("DOB")),
-                                    Email = reader.GetString(reader.GetOrdinal("EMAIL")),
-                                    PhoneNo = reader.GetString(reader.GetOrdinal("PHONE_NO")),
-                                    Address = reader.GetString(reader.GetOrdinal("ADDRESS"))
-                                });
+                                    string columnName = reader.GetName(i);
+                                    object columnValue = reader.GetValue(i);
+                                    employee.Add(columnName, columnValue);
+                                }
+
+                                employees.Add(employee);
                             }
                         }
                     }
@@ -162,6 +168,31 @@ namespace AST_Intranet.Models.Database
             return employees;
         }
 
+        public static int GetTotalEmployeesInDepartment(int departmentId)
+        {
+            int totalEmployees = 0;
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["OracleDbConnection"].ConnectionString;
+
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT COUNT(*) FROM cim_emp_master WHERE DEPARTMENT = :departmentId";
+
+                    using (OracleCommand command = new OracleCommand(query, connection))
+                    {
+                        command.Parameters.Add(new OracleParameter("departmentId", departmentId));
+                        totalEmployees = Convert.ToInt32(command.ExecuteScalar());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching total employees: {ex.Message}");
+            }
+            return totalEmployees;
+        }
 
     }
 }

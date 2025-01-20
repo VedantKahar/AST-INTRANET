@@ -38,12 +38,27 @@ namespace AST_Intranet
                  url: "{ controller}/{action}/{id}",
                  defaults: new { controller = "Dashboard", action = "DashboardView", id = UrlParameter.Optional }
           );
-
             routes.MapRoute(
-             name: "EmployeesRoute",
-             url: "{controller}/{action}/{id}",
-             defaults: new { controller = "Employees", action = "employeesView", id = UrlParameter.Optional }
+                name: "EmployeesRoute",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Employees", action = "employeesView", id = UrlParameter.Optional }
          );
+           
+            routes.MapRoute(
+               name: "TodayUpdateRoute",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Updates", action = "UpdatesView", id = UrlParameter.Optional }
+        );
+            routes.MapRoute(
+              name: "PoliciesRoute",
+              url: "{controller}/{action}/{id}",
+              defaults: new { controller = "Policies", action = "PoliciesView", id = UrlParameter.Optional }
+       );
+            routes.MapRoute(
+             name: "ManualsRoute",
+             url: "{controller}/{action}/{id}",
+             defaults: new { controller = "Manuals", action = "ManualsView", id = UrlParameter.Optional }
+      );
         }
     }
 }

@@ -29,29 +29,39 @@ namespace AST_Intranet.Controllers
             return View();
         }
 
-        public ActionResult GetEmployeesByDepartment(string departmentName)
+        // Action method to get employees by department
+        public ActionResult GetEmployeesByDepartment(string departmentName, int page = 1)
         {
-            // Get the department ID based on department name
             int departmentId = GetDepartmentIdByName(departmentName);
 
-            // Check if the department ID is found
             if (departmentId == 0)
             {
-                // If no department found, return an empty list or a custom error message
                 return Content("Department not found");
             }
 
-            // Fetch the list of employees from the database for the selected department
-            var employees = EmployeeDBConnector.GetEmployeesByDepartment(departmentId);
+            // Define page size (15 employees per page)
+            int pageSize = 15;
 
-            // Check if any employees were found
+            // Get the total number of employees
+            var totalEmployees = EmployeeDBConnector.GetTotalEmployeesInDepartment(departmentId);
+
+            // Get the employees for the current page
+            var employees = EmployeeDBConnector.GetEmployeesByDepartment(departmentId, page, pageSize);
+
             if (employees == null || !employees.Any())
             {
                 return Content("No employees found for this department.");
             }
 
-            // Return a view with the employee data (not a partial view anymore)
-            return View("EmployeeList", employees); // Rendering a full view, not a partial view
+            // Calculate total pages
+            var totalPages = (int)Math.Ceiling((double)totalEmployees / pageSize);
+
+            // Pass data to the view
+            ViewBag.DepartmentName = departmentName;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View("_EmployeeList", employees);
         }
 
 

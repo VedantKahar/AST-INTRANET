@@ -33,7 +33,7 @@
         <a href="@Url.Action("EmployeesView", "Employees")">
             <img src="~/Images/icons/employees-icon.png" alt="Employees Icon"> <span>Employees</span>
         </a>
-        <a href="@Url.Action("UpdatesView", "Updates")">
+        <a href="@Url.Action("updatesView", "Updates")">
             <img src="~/Images/icons/today-icon.png" alt="Updates Icon"> <span>Today's Updates</span>
         </a>
         <a href="@Url.Action("TownhallView", "Townhall")">
@@ -42,19 +42,19 @@
         <a href="@Url.Action("ResourcesView", "Resources")">
             <img src="~/Images/icons/resources-icon.png" alt="Resources Icon"> <span>Resources</span>
         </a>
-        <a href="@Url.Action("ManualsView", "ManualsController")">
+        <a href="@Url.Action("manualsView", "Manuals")">
             <img src="~/Images/icons/manual-icon.png" alt="Manual Icon"> <span>Manuals</span>
         </a>
-        <a href="@Url.Action("AchievementsView", "AchievementsController")">
+        <a href="@Url.Action("AchievementsView", "Achievements")">
             <img src="~/Images/icons/achievements-icon.png" alt="Achievements Icon"> <span>Achievements</span>
         </a>
-        <a href="@Url.Action("PoliciesView", "PoliciesController")">
+        <a href="@Url.Action("policiesView", "Policies")">
             <img src="~/Images/icons/policies-icon.png" alt="Policies Icon"> <span>Policies</span>
         </a>
-        <a href="@Url.Action("EventsView", "EventsController")">
+        <a href="@Url.Action("EventsView", "Events")">
             <img src="~/Images/icons/events-icon.png" alt="Events Icon"> <span>Events</span>
         </a>
-        <a href="@Url.Action("LoginView", "AccountsController")">
+        <a href="@Url.Action("LoginView", "Accounts")">
             <img src="~/Images/icons/logout-icon.png" alt="Log Out Icon"> <span>Log Out</span>
         </a>
     </div>
@@ -115,7 +115,6 @@
         <hr />
         <br />
 
-
         <div class="employee-count-box">
             <div>
                 <h3>Total Employees</h3>
@@ -137,7 +136,7 @@
                 foreach (var department in ViewBag.Departments)
                 {
                     <div class="department">
-                        <!-- Use an anchor tag to link to the new action -->
+                        <!-- Link to GetEmployeesByDepartment action with department name -->
                         <a href="@Url.Action("GetEmployeesByDepartment", "Employees", new { departmentName = department })">
                             <h3>@department</h3>
                             <hr />
@@ -151,7 +150,6 @@
                 <p>No departments available.</p>
             }
         </div>
-
 
         <!-- Employee list will be loaded here -->
         <div id="employee-list">

@@ -1,4 +1,3 @@
-   
         const toggleSidebar = document.getElementById('toggleSidebar');
         const sidebar = document.getElementById('sidebar');
 

@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace AST_Intranet.Controllers
 {
-    public class ManualsController : Controller
+    public class UpdatesController : Controller
     {
-        // GET: manuals
-        public ActionResult ManualsView()
+        // GET: Updates
+        public ActionResult UpdatesView()
         {
             return View();
         }
