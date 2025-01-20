@@ -1,5 +1,7 @@
 ﻿@{
     Layout = null;
+    ViewBag.Title = "Department List";
+    ViewBag.Title = "Employee Information";
 }
 
 <!DOCTYPE html>
@@ -13,6 +15,8 @@
     <!-- Include Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 </head>
 <body>
@@ -111,7 +115,7 @@
         <hr />
         <br />
 
-        <!-- Display Employee Count and Departments -->
+
         <div class="employee-count-box">
             <div>
                 <h3>Total Employees</h3>
@@ -126,19 +130,19 @@
                 <p>@ViewBag.TotalDepartments</p>
             </div>
         </div>
-
+        <!-- Display Departments -->
         <div class="department-container">
             @if (ViewBag.Departments != null)
             {
                 foreach (var department in ViewBag.Departments)
                 {
-                    <div class="department" id="@department.Replace(" ", "")Dept">
-                        <h3>
-                            <!-- Update the link to navigate to the EmployeesByDepartment action -->
-                            <a href="@Url.Action("EmployeesByDepartment", "Employees", new { departmentName = department })"> @department </a>
-                        </h3>
-                        <hr />
-                        <p>Short description of the @department department.</p>
+                    <div class="department">
+                        <!-- Use an anchor tag to link to the new action -->
+                        <a href="@Url.Action("GetEmployeesByDepartment", "Employees", new { departmentName = department })">
+                            <h3>@department</h3>
+                            <hr />
+                            <p>Short description of the @department department.</p>
+                        </a>
                     </div>
                 }
             }
@@ -148,26 +152,12 @@
             }
         </div>
 
-        <!-- Modal for showing employees -->
-        <div id="employeeModal" class="modal" style="display: none;">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h2>Employees in Selected Department</h2>
-                <table id="employeeTable">
-                    <thead>
-                        <tr>
-                            <th>Employee Code</th>
-                            <th>Employee Name</th>
-                            <th>Designation</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody id="employeeTableBody">
-                        <!-- Dynamic employee rows will be inserted here -->
-                    </tbody>
-                </table>
-            </div>
+
+        <!-- Employee list will be loaded here -->
+        <div id="employee-list">
+            <!-- Employee details will be dynamically loaded here -->
         </div>
+
 
     </div>
 

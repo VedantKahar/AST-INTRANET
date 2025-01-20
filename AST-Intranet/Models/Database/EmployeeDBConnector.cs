@@ -117,54 +117,38 @@ namespace AST_Intranet.Models.Database
             }
             return departments;
         }
-        // Method to get all employees from a specific department
 
-        public static List<Employee> GetEmployeesByDepartment(string departmentName)
+        public static List<Employee> GetEmployeesByDepartment(int departmentId)
         {
             List<Employee> employees = new List<Employee>();
+
             try
             {
                 string connectionString = ConfigurationManager.ConnectionStrings["OracleDbConnection"].ConnectionString;
+
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
                     connection.Open();
-                    string query = @"SELECT e.*, d.* 
-                             FROM cim_emp_master e
-                             JOIN department_master d
-                             ON e.DEPARTMENT = d.DEPT_ID
-                             WHERE d.DEPT_NAME = :departmentName";
+                    string query = "SELECT * FROM cim_emp_master WHERE DEPARTMENT = :departmentId";
 
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {
-                        command.Parameters.Add(new OracleParameter(":departmentName", OracleDbType.Varchar2)).Value = departmentName;
+                        command.Parameters.Add(new OracleParameter("departmentId", departmentId));
+
                         using (OracleDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Employee emp = new Employee();
-
-                                // Loop through all columns in the reader and map them to the Employee object
-                                for (int i = 0; i < reader.FieldCount; i++)
+                                employees.Add(new Employee
                                 {
-                                    string columnName = reader.GetName(i);  // Get the column name
-                                    object columnValue = reader.GetValue(i); // Get the column value
-
-                                    // Match the column name with the Employee property
-                                    var property = typeof(Employee).GetProperty(columnName,
-                                                System.Reflection.BindingFlags.Public |
-                                                System.Reflection.BindingFlags.Instance);
-
-                                    // If no match is found in the class, print a debug message
-                                    if (property == null)
-                                    {
-                                        Console.WriteLine($"No matching property found for column: {columnName}");
-                                    }
-                                    else if (columnValue != DBNull.Value)
-                                    {
-                                        property.SetValue(emp, Convert.ChangeType(columnValue, property.PropertyType));
-                                    }
-                                }
-                                employees.Add(emp); // Add the employee to the list
+                                    EmpCode = reader.GetInt32(reader.GetOrdinal("EMP_CODE")),
+                                    EmpName = reader.GetString(reader.GetOrdinal("EMP_NAME")),
+                                    Designation = reader.GetString(reader.GetOrdinal("DESIGNATION")),
+                                    Dob = reader.GetDateTime(reader.GetOrdinal("DOB")),
+                                    Email = reader.GetString(reader.GetOrdinal("EMAIL")),
+                                    PhoneNo = reader.GetString(reader.GetOrdinal("PHONE_NO")),
+                                    Address = reader.GetString(reader.GetOrdinal("ADDRESS"))
+                                });
                             }
                         }
                     }
@@ -172,8 +156,9 @@ namespace AST_Intranet.Models.Database
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error fetching employees by department: {ex.Message}");
+                Console.WriteLine($"Error fetching employees: {ex.Message}");
             }
+
             return employees;
         }
 

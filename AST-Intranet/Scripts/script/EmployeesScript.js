@@ -290,6 +290,25 @@
         endYearSelect.addEventListener('change', updateChart);
 
 
+    //function loadEmployees(departmentName) {
+//    console.log("loadEmployees called for department:", departmentName); // Debugging line
+
+//    $.ajax({
+//        url: '@Url.Action("GetEmployeesByDepartment", "Employees")',
+//        type: 'GET',
+//        data: { departmentName: departmentName },
+//        success: function (data) {
+//            $('#employee-list').html(data); // Load the returned HTML into the div
+//        },
+//        error: function (xhr, status, error) {
+//            console.error('Error loading employees: ', error); // Log errors
+//            alert('Error loading employees: ' + error);
+//        }
+//    });
+//}
+
+
+
 //console.log("EmployeesScript.js loaded");
 
 //// Now define showEmployees

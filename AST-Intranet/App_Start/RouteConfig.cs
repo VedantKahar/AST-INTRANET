@@ -39,8 +39,6 @@ namespace AST_Intranet
                  defaults: new { controller = "Dashboard", action = "DashboardView", id = UrlParameter.Optional }
           );
 
-
-
             routes.MapRoute(
              name: "EmployeesRoute",
              url: "{controller}/{action}/{id}",

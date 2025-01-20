@@ -229,6 +229,7 @@
     <Content Include="Views\accounts\signupView.cshtml" />
     <Content Include="Views\accounts\forgotpasswordView.cshtml" />
     <Content Include="Views\Employees\EmployeesByDepartment.cshtml" />
+    <Content Include="Views\Employees\_EmployeeList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
