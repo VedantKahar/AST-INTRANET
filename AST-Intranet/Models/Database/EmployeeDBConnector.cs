@@ -18,7 +18,7 @@ namespace AST_Intranet.Models.Database
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT COUNT(*) FROM cim_emp_master";
+                    string query = "SELECT COUNT(*) FROM cim_emp_master_list WHERE STATUS = 'Active'";
 
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {
@@ -44,7 +44,7 @@ namespace AST_Intranet.Models.Database
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT COUNT(*) FROM cim_emp_master WHERE join_date >= :joinDate";
+                    string query = "SELECT COUNT(*) FROM cim_emp_master_list WHERE join_date >= :joinDate";
 
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {
@@ -71,7 +71,7 @@ namespace AST_Intranet.Models.Database
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT COUNT(*) FROM department_master";
+                    string query = "SELECT COUNT (DISTINCT DEPARTMENT) FROM  cim_emp_master_list";
 
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {
@@ -86,7 +86,6 @@ namespace AST_Intranet.Models.Database
             return totalDepartments;
         }
 
-        // Method to get department details
         public static List<string> GetDepartments()
         {
             List<string> departments = new List<string>();
@@ -97,7 +96,8 @@ namespace AST_Intranet.Models.Database
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT DEPT_NAME FROM department_master";
+                    // Select distinct department names from cim_emp_master_list
+                    string query = "SELECT DISTINCT DEPARTMENT FROM cim_emp_master_list WHERE DEPARTMENT IS NOT NULL";
 
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {
@@ -105,7 +105,9 @@ namespace AST_Intranet.Models.Database
                         {
                             while (reader.Read())
                             {
-                                departments.Add(reader.GetString(reader.GetOrdinal("DEPT_NAME")));
+                                var departmentName = reader.GetString(reader.GetOrdinal("DEPARTMENT"));
+                                Console.WriteLine($"Found Department: {departmentName}");  // Debugging line
+                                departments.Add(departmentName);
                             }
                         }
                     }
@@ -119,7 +121,7 @@ namespace AST_Intranet.Models.Database
         }
 
 
-        public static List<Dictionary<string, object>> GetEmployeesByDepartment(int departmentId, int page, int pageSize)
+        public static List<Dictionary<string, object>> GetEmployeesByDepartment(string departmentName, int page, int pageSize)
         {
             List<Dictionary<string, object>> employees = new List<Dictionary<string, object>>();
 
@@ -134,11 +136,19 @@ namespace AST_Intranet.Models.Database
                     // Calculate the starting row for pagination
                     int startRow = (page - 1) * pageSize;
 
-                    string query = "SELECT * FROM (SELECT emp.*, ROWNUM AS rn FROM cim_emp_master emp WHERE DEPARTMENT = :departmentId) WHERE rn BETWEEN :startRow AND :endRow";
+                    // Query for employees in a specific department using department name
+                      string query = @"
+                            SELECT * 
+                            FROM (
+                                SELECT emp.*, ROWNUM AS rn 
+                                FROM cim_emp_master_list emp 
+                                WHERE emp.DEPARTMENT = :departmentName AND emp.STATUS = 'Active'
+                            ) 
+                            WHERE rn BETWEEN :startRow AND :endRow";
 
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {
-                        command.Parameters.Add(new OracleParameter("departmentId", departmentId));
+                        command.Parameters.Add(new OracleParameter("departmentName", departmentName));
                         command.Parameters.Add(new OracleParameter("startRow", startRow + 1));  // Oracle ROWNUM starts from 1
                         command.Parameters.Add(new OracleParameter("endRow", startRow + pageSize));
 
@@ -168,7 +178,9 @@ namespace AST_Intranet.Models.Database
             return employees;
         }
 
-        public static int GetTotalEmployeesInDepartment(int departmentId)
+
+
+        public static int GetTotalEmployeesInDepartment(string departmentName)
         {
             int totalEmployees = 0;
             try
@@ -178,11 +190,11 @@ namespace AST_Intranet.Models.Database
                 using (OracleConnection connection = new OracleConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT COUNT(*) FROM cim_emp_master WHERE DEPARTMENT = :departmentId";
+                    string query = "SELECT COUNT(*) FROM cim_emp_master_list WHERE DEPARTMENT = :departmentName and STATUS = 'Active' ";
 
                     using (OracleCommand command = new OracleCommand(query, connection))
                     {
-                        command.Parameters.Add(new OracleParameter("departmentId", departmentId));
+                        command.Parameters.Add(new OracleParameter("departmentName", departmentName));
                         totalEmployees = Convert.ToInt32(command.ExecuteScalar());
                     }
                 }
@@ -193,6 +205,7 @@ namespace AST_Intranet.Models.Database
             }
             return totalEmployees;
         }
+
 
     }
 }

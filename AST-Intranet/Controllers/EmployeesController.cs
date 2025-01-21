@@ -29,24 +29,16 @@ namespace AST_Intranet.Controllers
             return View();
         }
 
-        // Action method to get employees by department
         public ActionResult GetEmployeesByDepartment(string departmentName, int page = 1)
         {
-            int departmentId = GetDepartmentIdByName(departmentName);
-
-            if (departmentId == 0)
-            {
-                return Content("Department not found");
-            }
-
             // Define page size (15 employees per page)
             int pageSize = 15;
 
-            // Get the total number of employees
-            var totalEmployees = EmployeeDBConnector.GetTotalEmployeesInDepartment(departmentId);
+            // Get the total number of employees in the specified department
+            var totalEmployees = EmployeeDBConnector.GetTotalEmployeesInDepartment(departmentName);
 
-            // Get the employees for the current page
-            var employees = EmployeeDBConnector.GetEmployeesByDepartment(departmentId, page, pageSize);
+            // Get the employees for the current page in the specified department
+            var employees = EmployeeDBConnector.GetEmployeesByDepartment(departmentName, page, pageSize);
 
             if (employees == null || !employees.Any())
             {
@@ -65,38 +57,5 @@ namespace AST_Intranet.Controllers
         }
 
 
-        // Helper method to get department ID from department name
-        private int GetDepartmentIdByName(string departmentName)
-        {
-            int departmentId = 0; // Default to 0 if not found
-
-            try
-            {
-                string connectionString = ConfigurationManager.ConnectionStrings["OracleDbConnection"].ConnectionString;
-
-                using (OracleConnection connection = new OracleConnection(connectionString))
-                {
-                    connection.Open();
-                    string query = "SELECT DEPT_ID FROM department_master WHERE DEPT_NAME = :departmentName";
-
-                    using (OracleCommand command = new OracleCommand(query, connection))
-                    {
-                        command.Parameters.Add(new OracleParameter("departmentName", departmentName));
-
-                        object result = command.ExecuteScalar();
-                        if (result != DBNull.Value && result != null)
-                        {
-                            departmentId = Convert.ToInt32(result); // Convert to integer if found
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error fetching department ID: {ex.Message}");
-            }
-
-            return departmentId; // Return the department ID or 0 if not found
-        }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "updatesView";
     Layout = null;
 
@@ -75,12 +74,28 @@
             <p id="quote"></p>
         </div>
 
-        <!-- Birthday Section -->
         <div class="section birthday">
             <h3>Employee Birthdays</h3>
             <ul>
-                <li><strong>John Doe</strong> - 32</li>
-                <li><strong>Jane Smith</strong> - 28</li>
+                @if (ViewBag.Birthdays != null)
+                {
+                    var birthdays = ViewBag.Birthdays as List<string>;
+                    if (birthdays != null && birthdays.Count > 0)
+                    {
+                        foreach (var birthday in birthdays)
+                        {
+                            <li><strong>@birthday</strong></li>
+                        }
+                    }
+                    else
+                    {
+                        <li>No birthdays today.</li>
+                    }
+                }
+                else
+                {
+                    <li>No birthdays today.</li>
+                }
             </ul>
         </div>
 
@@ -94,6 +109,7 @@
         </div>
 
         <!-- Cafeteria Menu Section -->
+        <!--fetch data from mail, set here according to each day-->
         <div class="section">
             <h3>Today's Cafeteria Menu</h3>
             <p><strong>Lunch:</strong> Bhel,PaniPuri,DahiVada,GulabJamun</p>

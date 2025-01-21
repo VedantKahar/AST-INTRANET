@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\AST-Intranet",
     "\\AST-Intranet\\Content",
     "\\AST-Intranet\\Content\\css",
+    "\\AST-Intranet\\Controllers",
     "\\AST-Intranet\\Models",
     "\\AST-Intranet\\Models\\Database",
     "\\AST-Intranet\\Scripts",
