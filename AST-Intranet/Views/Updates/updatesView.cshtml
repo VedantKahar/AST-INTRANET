@@ -74,6 +74,7 @@
             <p id="quote"></p>
         </div>
 
+        <!-- Birthday Section -->
         <div class="section birthday">
             <h3>Employee Birthdays</h3>
             <ul>
@@ -100,13 +101,31 @@
         </div>
 
         <!-- Work Anniversary Section -->
-        <div class="section">
+        <div class="section anniversary">
             <h3>Work Anniversaries</h3>
             <ul>
-                <li>Emily Clark - 5 years</li>
-                <li>Mark Adams - 2 years</li>
+                @if (ViewBag.Anniversaries != null)
+                {
+                    var anniversaries = ViewBag.Anniversaries as List<string>;
+                    if (anniversaries != null && anniversaries.Count > 0)
+                    {
+                        foreach (var anniversary in anniversaries)
+                        {
+                            <li><strong>@anniversary</strong></li>
+                        }
+                    }
+                    else
+                    {
+                        <li>No work anniversaries today.</li>
+                    }
+                }
+                else
+                {
+                    <li>No work anniversaries today.</li>
+                }
             </ul>
         </div>
+
 
         <!-- Cafeteria Menu Section -->
         <!--fetch data from mail, set here according to each day-->

@@ -172,7 +172,7 @@
     </Compile>
     <Compile Include="Models\Database\DatabaseConnector.cs" />
     <Compile Include="Models\Database\EmployeeDBConnector.cs" />
-    <Compile Include="Models\Database\UpddateDBConnector.cs" />
+    <Compile Include="Models\Database\UpdateDBConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -229,7 +229,6 @@
     <Content Include="Views\accounts\loginView.cshtml" />
     <Content Include="Views\accounts\signupView.cshtml" />
     <Content Include="Views\accounts\forgotpasswordView.cshtml" />
-    <Content Include="Views\Employees\EmployeesByDepartment.cshtml" />
     <Content Include="Views\Employees\_EmployeeList.cshtml" />
   </ItemGroup>
   <ItemGroup>

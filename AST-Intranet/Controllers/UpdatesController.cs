@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using AST_Intranet.Models.Database;
 
@@ -9,17 +10,17 @@ namespace AST_Intranet.Controllers
         // GET: Updates
         public ActionResult UpdatesView()
         {
-            // Fetch employee birthdays from the database
-            var birthdays = UpdateDBConnector.GetEmployeeBirthdays();
+            List<string> birthdays;
+            List<string> anniversaries;
 
-            // Debugging: Check the number of birthdays
-            Console.WriteLine($"Number of birthdays retrieved: {birthdays.Count}");
+            // Fetch birthdays and anniversaries using the UpdateDBConnector method
+            UpdateDBConnector.GetEmployeeBirthdaysAndAnniversaries(out birthdays, out anniversaries);
 
-            // Pass the birthdays to the view
+            // Pass the fetched lists to the view
             ViewBag.Birthdays = birthdays;
+            ViewBag.Anniversaries = anniversaries;
 
             return View();
         }
-
     }
 }

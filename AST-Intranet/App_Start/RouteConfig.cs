@@ -22,43 +22,42 @@ namespace AST_Intranet
                name: "loginRoute",
                url: "{controller}/{action}/{id}",
                defaults: new { controller = "accountsController", action = "loginView", id = UrlParameter.Optional }
-           );
+            );
             routes.MapRoute(
                name: "signupRoute",
                url: "{controller}/{action}/{id}",
                defaults: new { controller = "accountsController", action = "signupView", id = UrlParameter.Optional }
-           );
+            );
             routes.MapRoute(
                name: "forgotpasswordRoute",
                url: "{controller}/{action}/{id}",
                defaults: new { controller = "accountsController", action = "forgotpasswordView", id = UrlParameter.Optional }
-           );
+            );
             routes.MapRoute(
                  name: "dashboardRoute",
                  url: "{ controller}/{action}/{id}",
                  defaults: new { controller = "Dashboard", action = "DashboardView", id = UrlParameter.Optional }
-          );
+            );
             routes.MapRoute(
                 name: "EmployeesRoute",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Employees", action = "employeesView", id = UrlParameter.Optional }
-         );
-           
+            );
             routes.MapRoute(
                name: "TodayUpdateRoute",
                url: "{controller}/{action}/{id}",
                defaults: new { controller = "Updates", action = "UpdatesView", id = UrlParameter.Optional }
-        );
+            );
             routes.MapRoute(
               name: "PoliciesRoute",
               url: "{controller}/{action}/{id}",
               defaults: new { controller = "Policies", action = "PoliciesView", id = UrlParameter.Optional }
-       );
+            );
             routes.MapRoute(
              name: "ManualsRoute",
              url: "{controller}/{action}/{id}",
              defaults: new { controller = "Manuals", action = "ManualsView", id = UrlParameter.Optional }
-      );
+            );
         }
     }
 }

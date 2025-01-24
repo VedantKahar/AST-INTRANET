@@ -20,7 +20,7 @@
                     <th>Designation</th>
                     <th>Email</th>
                     <th>Phone No</th>
-                    <th>Address</th>
+                    <th>Location</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,7 +32,7 @@
                         <td>@employee["DESIGNATION"]</td>
                         <td>@employee["EMAIL"]</td>
                         <td>@employee["PHONE_NO"]</td>
-                        <td>@employee["ADDRESS"]</td>
+                        <td>@employee["LOCATION"]</td>
                     </tr>
                 }
             </tbody>
@@ -45,8 +45,7 @@
 </div>
 
 <!-- Pagination Controls -->
-@if (totalPages > 1)
-{
+@if (totalPages > 1){
     <div class="pagination">
         <span>Showing @((currentPage - 1) * 15 + 1) to @(currentPage * 15) of @((totalPages * 15) - (15 - employees.Count)) entries</span>
 

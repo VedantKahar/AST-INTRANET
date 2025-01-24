@@ -189,6 +189,7 @@
             color: white;
             overflow: hidden;
             animation: heroAnimation 1.5s ease-out;
+            background-image: url('../../Images/images/AST-building.png'); /* Going up 2 directories to access the image */
         }
 
 
@@ -361,24 +362,26 @@
             font-weight: 600;
         }
 
-              
-        .stats {
-            background-color: #fff; /* Light background for the stats container */
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            margin-top: 20px;
-        }
+.stats {
+    background-color: #fff; /* Light background for the stats container */
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 20px;
+}
 
-        .stats div {
-            background-color: #34495e; /* Dark blue for the card background */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            flex: 1;
-            text-align: center;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
+    .stats div {
+        background-color: #34495e; /* Dark blue for the card background */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        flex: 1;
+        text-align: center;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Ensures button and content are spaced properly */
+    }
 
         .stats div:hover {
             transform: translateY(-5px); /* Slight upward movement on hover */
@@ -386,7 +389,6 @@
         }
 
         .stats div h3 {
-            /* font-size: 2.5em;*/ /* Larger font size for the numbers */
             color: #16a085; /* Teal color for the numbers */
             margin-bottom: 10px;
         }
@@ -394,51 +396,73 @@
         .stats div p {
             font-size: 1.2em;
             color: #ecf0f1; /* White text color for the descriptions */
+            margin-bottom: 15px; /* Ensure a little space between description and button */
+            flex-grow: 1; /* This will allow the description to take up available space */
         }
 
+.clickable-box {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 15px;
+    text-align: center;
+    background-color: #16a085;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0; /* Ensures clickable-box doesn't shrink */
+}
 
-        .clickable-box {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            padding: 15px;
-            text-align: center;
-            background-color: #16a085;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            transition: background-color 0.3s ease;
-        }
+    .clickable-box:hover {
+        background-color: #1abc9c;
+    }
 
-        .clickable-box:hover {
-            background-color: #1abc9c;
-        }
+.portal-name {
+    font-size: 1.5em;
+    color: #34495e;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
 
-        /* Container for the portals section */
-        .portal-name {
-            font-size: 1.5em;
-            color: #34495e;
-            font-weight: bold;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
+    .portal-name::after {
+        content: "";
+        display: block;
+        width: 80%;
+        height: 2px;
+        background-color: #fff;
+        margin: 8px auto;
+    }
 
-        .portal-name::after {
-            content: "";
-            display: block;
-            width: 80%;
-            height: 2px;
-            background-color: #fff;
-            margin: 8px auto;
-        }
+.section .stats .description {
+    color: #34495e;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    transition: color 0.5s ease;
+    flex-grow: 1; /* Makes sure descriptions take up as much space as needed */
+    min-height: 100px; /* Ensure a minimum height to maintain layout consistency */
+}
 
-        /* Styling for the descriptions under the "Our Portals" section */
-        .section .stats .description {
-            color: #34495e; /* Set the color to blue, change it to any color you prefer */
-            /*font-size: 1em;*/ /* You can also modify font size here */
-            line-height: 1.3; /* Reduce the line height for tighter text spacing */
-            margin-bottom: 10px;
-            transition: color 0.5s ease; /* Optional: smooth transition effect */
-        }
+/* Ensuring the button stays aligned */
+.open-manual-btn {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-start; /* Aligns the button to the left */
+}
+
+    .open-manual-btn:hover {
+        background-color: #2980b9;
+    }
+
+    .open-manual-btn:focus {
+        outline: none;
+    }
 
 
         h4 {
@@ -447,25 +471,7 @@
             font-weight: normal;
         }
 
-        /* Button styling */
-        .open-manual-btn {
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .open-manual-btn:hover {
-            background-color: #2980b9;
-        }
-
-        .open-manual-btn:focus {
-            outline: none;
-        }
+    
 
         /* Orders Overview section */
         h3 {
@@ -481,12 +487,6 @@
             margin-top: 5px;
             text-align: center; /* Center the paragraph text as well */
         }
-        /*.section {
-            padding: 30px;*/
-            /*background-color: #ecf0f1;*/ /* Light background for the section */
-            /*border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }*/
 
        
         /* Responsive Design */

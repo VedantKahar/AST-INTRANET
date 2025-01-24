@@ -1,4 +1,4 @@
-body {
+        body {
             margin: 0;
             font-family: Arial, sans-serif;
             color: #000;
@@ -255,7 +255,6 @@ body {
                 .department a:hover {
                     color: #2C3E50;
                 }
-
 
         /* General container style for centering */
         .container {

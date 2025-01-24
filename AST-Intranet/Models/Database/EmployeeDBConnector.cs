@@ -120,7 +120,6 @@ namespace AST_Intranet.Models.Database
             return departments;
         }
 
-
         public static List<Dictionary<string, object>> GetEmployeesByDepartment(string departmentName, int page, int pageSize)
         {
             List<Dictionary<string, object>> employees = new List<Dictionary<string, object>>();
@@ -174,11 +173,8 @@ namespace AST_Intranet.Models.Database
             {
                 Console.WriteLine($"Error fetching employees: {ex.Message}");
             }
-
             return employees;
         }
-
-
 
         public static int GetTotalEmployeesInDepartment(string departmentName)
         {
@@ -206,6 +202,108 @@ namespace AST_Intranet.Models.Database
             return totalEmployees;
         }
 
+        // Method to fetch male and female employee count per year
+        public static List<Dictionary<string, object>> GetMaleFemaleEmployeesByYear()
+        {
+            List<Dictionary<string, object>> employeesByYear = new List<Dictionary<string, object>>();
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["OracleDbConnection"].ConnectionString;
+
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = @"
+                        SELECT EXTRACT(YEAR FROM join_date) AS year, 
+                        SUM(CASE WHEN gender = 'Male' THEN 1 ELSE 0 END) AS male_count,
+                        SUM(CASE WHEN gender = 'Female' THEN 1 ELSE 0 END) AS female_count
+                        FROM cim_emp_master_list
+                        WHERE STATUS = 'Active'
+                        GROUP BY EXTRACT(YEAR FROM join_date)
+                        ORDER BY year";
+
+                    using (OracleCommand command = new OracleCommand(query, connection))
+                    {
+                        using (OracleDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var year = reader.GetInt32(reader.GetOrdinal("year"));
+                                var maleCount = reader.GetInt32(reader.GetOrdinal("male_count"));
+                                var femaleCount = reader.GetInt32(reader.GetOrdinal("female_count"));
+
+                                employeesByYear.Add(new Dictionary<string, object>
+                        {
+                            { "year", year },
+                            { "male_count", maleCount },
+                            { "female_count", femaleCount }
+                        });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching male/female employee data: {ex.Message}");
+            }
+
+            return employeesByYear;
+        }
+
+        // Method to fetch employees per department per year with year range
+        public static List<Dictionary<string, object>> GetEmployeesByDepartmentPerYear(int startYear, int endYear)
+        {
+            List<Dictionary<string, object>> employeesByDeptYear = new List<Dictionary<string, object>>();
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["OracleDbConnection"].ConnectionString;
+
+                using (OracleConnection connection = new OracleConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = @"
+                    SELECT EXTRACT(YEAR FROM join_date) AS year, 
+                    department, 
+                    COUNT(*) AS employee_count
+                    FROM cim_emp_master_list
+                    WHERE STATUS = 'Active'
+                    AND EXTRACT(YEAR FROM join_date) BETWEEN :startYear AND :endYear
+                    GROUP BY EXTRACT(YEAR FROM join_date), department
+                    ORDER BY year, department";
+
+                    using (OracleCommand command = new OracleCommand(query, connection))
+                    {
+                        // Add parameters to prevent SQL injection
+                        command.Parameters.Add(new OracleParameter(":startYear", startYear));
+                        command.Parameters.Add(new OracleParameter(":endYear", endYear));
+
+                        using (OracleDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var year = reader.GetInt32(reader.GetOrdinal("year"));
+                                var department = reader.GetString(reader.GetOrdinal("department"));
+                                var employeeCount = reader.GetInt32(reader.GetOrdinal("employee_count"));
+
+                                employeesByDeptYear.Add(new Dictionary<string, object>
+                                {
+                                    { "year", year },
+                                    { "department", department },
+                                    { "employee_count", employeeCount }
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching department employee data: {ex.Message}");
+            }
+
+            return employeesByDeptYear;
+        }
 
     }
 }

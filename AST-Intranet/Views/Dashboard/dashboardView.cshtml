@@ -74,7 +74,7 @@
             </div>
         </div>
 
-        <div class="hero-section" style="background-image: url('~/Images/images/hompage-bg.avif'); ">
+        <div class="hero-section">
             <div class="hero-content">
                 <h1>Advanced Sys-Tek Limited</h1>
                 <p>
@@ -144,17 +144,17 @@
                         <p class="description">Access a wide range of digital resources and services.</p>
                         <h4>Open Portal</h4>
                     </a>
-                    <a href="https://www.youtube.com/" target="_blank">
+                    <a href="@Url.Action("manualsView", "Manuals")" > @*target="_blank"*@
                         <button class="open-manual-btn">Open Manual</button>
                     </a>
                 </div>
                 <div>
                     <a href="your-link-here" target="_blank" class="clickable-box">
                         <span class="portal-name">Spine HR</span>
-                        <p class="description">Manage human resources and employee data efficiently.</p>
+                        <p class="description">Manages human resources and employee data efficiently.</p>
                         <h4>Open Portal</h4>
                     </a>
-                    <a href="https://www.youtube.com/" target="_blank">
+                    <a href="@Url.Action("manualsView", "Manuals")"> @*target="_blank"*@
                         <button class="open-manual-btn">Open Manual</button>
                     </a>
                 </div>
@@ -165,7 +165,7 @@
                         <p class="description">Centralized system for inventory and material management.</p>
                         <h4>Open Portal</h4>
                     </a>
-                    <a href="https://www.youtube.com/" target="_blank">
+                    <a href="@Url.Action("manualsView", "Manuals")"> @*target="_blank"*@
                         <button class="open-manual-btn">Open Manual</button>
                     </a>
                 </div>
@@ -176,7 +176,7 @@
                         <p class="description">Track and manage customer relationship records easily.</p>
                         <h4>Open Portal</h4>
                     </a>
-                    <a href="https://www.youtube.com/" target="_blank">
+                    <a href="@Url.Action("manualsView", "Manuals")"> @*target="_blank"*@
                         <button class="open-manual-btn">Open Manual</button>
                     </a>
                 </div>
@@ -251,12 +251,12 @@
             </div>
         </section>
 
+
+
+        <footer class="footer">
+            &copy; 2024 Advanced Sys-Tek Limited | Contact Us | Feedback
+        </footer>
     </div>
-
-    <footer class="footer">
-        &copy; 2024 Advanced Sys-Tek Limited | Contact Us | Feedback
-    </footer>
-
     <!-- Link to the JavaScript file -->
     <script src="@Url.Content("~/Scripts/script/HomepageScript.js")"></script>
 

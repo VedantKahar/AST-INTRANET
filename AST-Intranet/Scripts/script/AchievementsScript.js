@@ -1,4 +1,3 @@
-
         const toggleSidebar = document.getElementById('toggleSidebar');
         const sidebar = document.getElementById('sidebar');
 
@@ -48,34 +47,52 @@
         sidebar.addEventListener('mouseenter', hoverOpen);
         sidebar.addEventListener('mouseleave', hoverClose);
 
-        let currentIndex = 0; // Track the current image index
-        const images = document.querySelectorAll('.slider-images img'); // Get all images in the slider
-        const totalImages = images.length; // Total number of images
 
-        // Function to change the image by incrementing the index
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.slider-images img'); // Select all images in the slider
+        const totalImages = images.length;
+        const titleElement = document.getElementById('achievement-title'); // Title element
+        const descriptionElement = document.getElementById('achievement-description'); // Description element
+
+        const achievements = [
+            {
+                title: 'Company Achievement 1',
+                description: 'Details about the achievement. This can include awards or recognitions received by the company.',
+                imageSrc: '~/Images/images/AST bg.jfif'
+            },
+            {
+                title: 'Company Achievement 2',
+                description: 'Details about another achievement. This includes more information about the company\'s growth or progress.',
+                imageSrc: '~/Images/images/AST-building.png'
+            }
+        ];
+
+        function showImage(index) {
+            // Hide all images
+            images.forEach((img) => {
+                img.classList.remove('active');
+            });
+
+            // Show the current image
+            images[index].classList.add('active');
+
+            // Update the title and description based on current index
+            titleElement.textContent = achievements[index].title;
+            descriptionElement.textContent = achievements[index].description;
+        }
+
         function nextImage() {
-            currentIndex = (currentIndex + 1) % totalImages; // Ensure index is within bounds (cyclic)
-            updateSlider();
+            currentIndex = (currentIndex + 1) % totalImages; // Loop back to the first image when at the end
+            showImage(currentIndex);
         }
 
-        // Function to change the image by decrementing the index
         function prevImage() {
-            currentIndex = (currentIndex - 1 + totalImages) % totalImages; // Ensure index is within bounds (cyclic)
-            updateSlider();
+            currentIndex = (currentIndex - 1 + totalImages) % totalImages; // Loop back to the last image when at the beginning
+            showImage(currentIndex);
         }
 
-        // Update the slider to show the current image
-        function updateSlider() {
-            const slider = document.querySelector('.slider-images');
-            const offset = -currentIndex * 100; // Move slider to the correct image
-            slider.style.transform = `translateX(${offset}%)`;
-        }
-
-        // Auto change the image every 5 seconds
+        // Automatically slide every 5 seconds
         setInterval(nextImage, 5000);
 
-        // Initial call to update the slider when the page loads
-        document.addEventListener("DOMContentLoaded", function () {
-            updateSlider();
-        });
-
+        // Initialize the first image
+        showImage(currentIndex);

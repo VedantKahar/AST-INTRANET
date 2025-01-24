@@ -1,4 +1,3 @@
-<style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -179,143 +178,100 @@
             margin-bottom: 20px;
         }
 
-        /* General Container Styling for Sections */
-        section {
-            margin-bottom: 40px;
+/* General Styling */
+section {
+    margin-bottom: 40px;
+}
+
+.achievement-cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.achievement-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Image Slider Styling */
+.image-slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 350px; /* Set height for the slider */
+}
+
+.slider-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+    .slider-images img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+        .slider-images img.active {
+            opacity: 1;
         }
 
-        /* Company Achievements Section */
-        .achievements-section .achievement-cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center; /* Centering the cards */
-            gap: 20px;
-        }
+/* Prev and Next Button Styling */
+.prev-btn, .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+}
 
-        .achievements-section .achievement-card {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-            width: 100%; /* One item per row */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-       
-        .achievements-section .achievement-card img {
-            width: 100%; /* Full width */
-            height: 300px; /* Larger image size */
-            object-fit: cover; /* Ensure the image covers the area */
-            border-radius: 8px;
-        }
+.prev-btn {
+    left: 10px;
+}
 
-        .achievements-section .achievement-card h3 {
-            font-size: 1.6em;
-            margin-top: 15px;
-            color: #34495e;
-        }
+.next-btn {
+    right: 10px;
+}
 
-        .achievements-section .achievement-card p {
-            font-size: 1em;
-            color: #7f8c8d;
-            margin-top: 10px;
-        }
+    .prev-btn:hover, .next-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
 
-        .achievements-section .achievement-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
+/* Title and Description Styling */
+.achievement-info h3 {
+    font-size: 1.6em;
+    margin-top: 15px;
+    color: #34495e;
+}
+
+.achievement-info p {
+    font-size: 1em;
+    color: #7f8c8d;
+    margin-top: 10px;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
 
 
-        /* Employee Achievements Section */
-        .employee-achievements-section .achievement-cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center; /* Centering the cards */
-            gap: 20px;
-        }
-
-        .employee-achievements-section .achievement-card {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-            width: 100%; /* One item per row */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .employee-achievements-section .achievement-card img {
-            width: 100%; /* Full width */
-            height: 300px; /* Larger image size */
-            object-fit: cover; /* Ensure the image covers the area */
-            border-radius: 8px;
-        }
-
-        .employee-achievements-section .achievement-card h3 {
-            font-size: 1.6em;
-            margin-top: 15px;
-            color: #34495e;
-        }
-
-        .employee-achievements-section .achievement-card p {
-            font-size: 1em;
-            color: #7f8c8d;
-            margin-top: 10px;
-        }
-
-        .employee-achievements-section .achievement-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Image Slider Styling */
-        .image-slider {
-            position: relative;
-            width: 100%;
-            max-width: 600px; /* Set maximum width for the image slider */
-            margin: 0 auto; /* Center the slider */
-            overflow: hidden;
-        }
-
-        .slider-images {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .slider-images img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            display: block; /* Ensure images behave as block elements */
-        }
-
-        /* Styling for navigation buttons */
-        .prev-btn, .next-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 10px;
-            z-index: 10;
-        }
-
-        .prev-btn {
-            left: 10px;
-        }
-
-        .next-btn {
-            right: 10px;
-        }
-
-        .prev-btn:hover, .next-btn:hover {
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
+    
+        
         /* Competition Winners Section */
 
         /* box for the contents*/
@@ -373,7 +329,7 @@
             font-size: 1.4em;
             margin-top: 15px;
             color: #34495e; /* Dark text color for title */
-        }
+        } 
 
         /* Description inside the competition card */
         .competition-section .competition-card span {
@@ -415,5 +371,3 @@
             box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
             transition: margin-left 0.3s ease;
         }
-
-    </style>

@@ -45,122 +45,121 @@ function hoverClose() {
 // Initially enable hover effect only when sidebar is closed
 sidebar.addEventListener('mouseenter', hoverOpen);
 sidebar.addEventListener('mouseleave', hoverClose);
+// Random color generator for chart lines
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
-// Sample Data for Male/Female Employees per Year
-const maleFemaleData = {
-    labels: ['2020', '2021', '2022', '2023', '2024'], // Year labels
-    datasets: [
-        {
-            label: 'Male Employees',
-            data: [250, 270, 300, 320, 345], // Male employee count per year
-            borderColor: '#4CAF50',
-            backgroundColor: '#4CAF50',
-            fill: false,
-            tension: 0.1,
-        },
-        {
-            label: 'Female Employees',
-            data: [150, 180, 200, 210, 222], // Female employee count per year
-            borderColor: '#FF4081',
-            backgroundColor: '#FF4081',
-            fill: false,
-            tension: 0.1,
-        },
-    ],
-};
+// Create the chart with dynamic data
+let currentChart = null;
+const ctx = document.getElementById('employeeChart').getContext('2d'); // Assuming you have a canvas with id 'employeeChart'
 
-// Sample Data for Employees per Department per Year
-const departmentData = {
-    labels: ['2020', '2021', '2022', '2023', '2024'], // Year labels
-    datasets: [
-        {
-            label: 'Software Department',
-            data: [50, 55, 60, 65, 72], // Software department employee count per year
-            borderColor: '#2196F3',
-            backgroundColor: '#2196F3',
-            fill: false,
-            tension: 0.1,
-        },
-        {
-            label: 'HR Department',
-            data: [100, 120, 130, 140, 142], // HR department employee count per year
-            borderColor: '#FFC107',
-            backgroundColor: '#FFC107',
-            fill: false,
-            tension: 0.1,
-        },
-        {
-            label: 'Customer Service Department',
-            data: [75, 80, 85, 90, 105], // Customer Service department employee count per year
-            borderColor: '#8BC34A',
-            backgroundColor: '#8BC34A',
-            fill: false,
-            tension: 0.1,
-        },
-        {
-            label: 'Plant Operation Department',
-            data: [60, 65, 70, 80, 107], // Plant Operation department employee count per year
-            borderColor: '#FF5722',
-            backgroundColor: '#FF5722',
-            fill: false,
-            tension: 0.1,
-        },
-        {
-            label: 'Finance & Accounts',
-            data: [45, 55, 60, 65, 70], // Finance & Accounts department employee count per year
-            borderColor: '#9C27B0',
-            backgroundColor: '#9C27B0',
-            fill: false,
-            tension: 0.1,
-        },
-        {
-            label: 'Sales & Proposals',
-            data: [40, 45, 50, 55, 60], // Sales & Proposals department employee count per year
-            borderColor: '#03A9F4',
-            backgroundColor: '#03A9F4',
-            fill: false,
-            tension: 0.1,
-        },
-        {
-            label: 'Business Development',
-            data: [35, 38, 42, 47, 55], // Business Development department employee count per year
-            borderColor: '#673AB7',
-            backgroundColor: '#673AB7',
-            fill: false,
-            tension: 0.1,
-        },
-        {
-            label: 'Projects',
-            data: [60, 65, 70, 75, 80], // Projects department employee count per year
-            borderColor: '#FF9800',
-            backgroundColor: '#FF9800',
-            fill: false,
-            tension: 0.1,
-        },
-        {
-            label: 'Engineering & Operations',
-            data: [70, 80, 85, 95, 102], // Engineering & Operations department employee count per year
-            borderColor: '#009688',
-            backgroundColor: '#009688',
-            fill: false,
-            tension: 0.1,
-        },
-    ],
-};
+// Fetch Department Employee data from the server
+function fetchDepartmentData(startYear, endYear) {
+    return fetch(`/Employees/GetEmployeesByDepartmentPerYear?startYear=${startYear}&endYear=${endYear}`)
+        .then(response => response.json())
+        .then(data => {
+            const departments = Array.from(new Set(data.map(item => item.department))); // Get unique departments
+            const departmentData = {
+                labels: data.map(item => item.year), // Extract years
+                datasets: departments.map(department => {
+                    return {
+                        label: department,
+                        data: data.filter(item => item.department === department).map(item => item.employee_count),
+                        borderColor: getRandomColor(),
+                        backgroundColor: getRandomColor(),
+                        fill: false,
+                        tension: 0.1,
+                    };
+                }),
+            };
+            return departmentData;
+        });
+}
 
-// Chart Initialization
-const ctx = document.getElementById('employeeChart').getContext('2d');
-let currentChart = null; // Holds the current chart object
+// Fetch Male/Female Employee data from the server
+function fetchMaleFemaleData(startYear, endYear) {
+    return fetch(`/Employees/GetMaleFemaleEmployeesByYear?startYear=${startYear}&endYear=${endYear}`)
+        .then(response => response.json())
+        .then(data => {
+            return {
+                labels: data.map(item => item.year), // Extract years
+                datasets: [
+                    {
+                        label: 'Male Employees',
+                        data: data.map(item => item.male_count), // Extract male counts
+                        borderColor: '#4CAF50',
+                        backgroundColor: '#4CAF50',
+                        fill: false,
+                        tension: 0.1,
+                    },
+                    {
+                        label: 'Female Employees',
+                        data: data.map(item => item.female_count), // Extract female counts
+                        borderColor: '#FF4081',
+                        backgroundColor: '#FF4081',
+                        fill: false,
+                        tension: 0.1,
+                    },
+                ],
+            };
+        });
+}
 
-// Create the chart (either Male/Female or Department data)
+// Fetch year range dynamically from the backend
+function fetchYearRange() {
+    fetch('/YourController/GetYearRange')  // Adjust the URL to your actual endpoint
+        .then(response => response.json())
+        .then(data => {
+            const [earliestYear, latestYear] = data;
+
+            const startYearSelect = document.getElementById('startYear');
+            const endYearSelect = document.getElementById('endYear');
+
+            // Clear existing options
+            startYearSelect.innerHTML = '';
+            endYearSelect.innerHTML = '';
+
+            // Add options dynamically for years
+            for (let year = earliestYear; year <= latestYear; year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                startYearSelect.appendChild(option);
+
+                const optionEnd = document.createElement('option');
+                optionEnd.value = year;
+                optionEnd.textContent = year;
+                endYearSelect.appendChild(optionEnd);
+            }
+
+            // Set default values for start and end years
+            startYearSelect.value = earliestYear;
+            endYearSelect.value = latestYear;
+
+            // Trigger the chart update after populating the dropdowns
+            updateChart();
+        })
+        .catch(error => console.error('Error fetching year range:', error));
+}
+
+// Initial chart load and year range fetch
+fetchYearRange();
+
+// Create the chart with dynamic data
 function createChart(data) {
     if (currentChart) {
-        currentChart.destroy(); // Destroy the previous chart if it exists
+        currentChart.destroy(); // Destroy previous chart instance to prevent duplication
     }
 
     currentChart = new Chart(ctx, {
-        type: 'bar', // You can change this to 'line','bar', 'radar', etc., depending on the graph style you want
-        data: data, // Pass the selected data (maleFemaleData or departmentData)
+        type: 'line', // Can change to 'bar' or other chart types if needed
+        data: data,
         options: {
             responsive: true,
             plugins: {
@@ -175,79 +174,32 @@ function createChart(data) {
             scales: {
                 x: {
                     type: 'category',
-                    title: {
-                        display: true,
-                        text: 'Year', // X-axis label
-                    },
-                    grid: {
-                        display: true,
-                        color: 'rgba(0,0,0,0.1)', // Optional, to make the gridlines less prominent
-                    },
+                    title: { display: true, text: 'Year' },
                 },
                 y: {
-                    title: {
-                        display: true,
-                        text: 'Number of Employees', // Y-axis label
-                    },
-                    ticks: {
-                        beginAtZero: true, // Start from 0 for better clarity
-                        stepSize: 20, // Adjust the step size as needed
-                    },
+                    title: { display: true, text: 'Number of Employees' },
+                    ticks: { beginAtZero: true, stepSize: 1 },
                 },
             },
         },
     });
 }
 
-// Update the chart based on the selected year range
+// Fetch data and create chart based on selected graph type and year range
 function updateChart() {
     const selectedGraphType = document.getElementById('graphType').value;
     const startYear = parseInt(document.getElementById('startYear').value);
     const endYear = parseInt(document.getElementById('endYear').value);
 
-    // Filter the data based on the selected year range
-    const yearLabels = maleFemaleData.labels;
-    const startIndex = yearLabels.indexOf(startYear.toString());
-    const endIndex = yearLabels.indexOf(endYear.toString());
-
-    // If the start year is greater than the end year, return early
-    if (startIndex > endIndex) {
-        alert("Start year cannot be greater than End year.");
-        return;
+    if (selectedGraphType === 'department') {
+        fetchDepartmentData(startYear, endYear).then(data => createChart(data));
     }
-
-    const filteredData = {
-        labels: yearLabels.slice(startIndex, endIndex + 1),
-        datasets: [],
-    };
-
-    // Select the appropriate data based on graph type (gender or department)
-    let dataToDisplay;
-    if (selectedGraphType === 'gender') {
-        dataToDisplay = maleFemaleData;
-    } else if (selectedGraphType === 'department') {
-        dataToDisplay = departmentData;
-    }
-
-    // Filter datasets for the selected year range
-    filteredData.datasets = dataToDisplay.datasets.map(dataset => ({
-        ...dataset,
-        data: dataset.data.slice(startIndex, endIndex + 1),
-    }));
-
-    // Update the chart with the new filtered data
-    createChart(filteredData);
 }
 
-// Initial chart load
-createChart(departmentData); // Start with the department data
+// Listen for changes in the dropdown and update the chart accordingly
+document.getElementById('graphType').addEventListener('change', updateChart);
+document.getElementById('startYear').addEventListener('change', updateChart);
+document.getElementById('endYear').addEventListener('change', updateChart);
 
-// Event listener for dropdown changes (to switch between Male/Female and Department data)
-const graphTypeSelect = document.getElementById('graphType');
-const startYearSelect = document.getElementById('startYear');
-const endYearSelect = document.getElementById('endYear');
-
-// Add one event listener for each dropdown
-graphTypeSelect.addEventListener('change', updateChart);
-startYearSelect.addEventListener('change', updateChart);
-endYearSelect.addEventListener('change', updateChart);
+// Initial chart load (on page load or when the page is ready)
+updateChart();
