@@ -66,30 +66,34 @@
             <h2>Company Achievements</h2>
             <div class="achievement-cards-container">
                 <div class="achievement-card">
-                    <button class="prev-btn" onclick="prevImage()">&#10094;</button>
+                    <!-- Prev Button -->
+                    <button class="prev-btn" onclick="prevAchievement()">&#10094;</button>
+
+                    <!-- Image Slider -->
                     <div class="image-slider">
-                        <div class="slider-images">
-                            <!-- Company Achievement 1 Image -->
-                            <img src="~/Images/images/AST bg.jfif" alt="Company Achievement 1" class="slider-image">
-                            <!-- Company Achievement 2 Image -->
-                            
+                        <div class="slider-content">
+                            <!-- Achievement 1 -->
+                            <div class="achievement-content" id="achievement1">
+                                <img src="~/Images/images/AST bg.jfif" alt="Achievement 1">
+                                <h3>Company Achievement 1</h3>
+                                <p>Details about the achievement. This can include awards or recognitions received by the company.</p>
+                            </div>
+                            <!-- Achievement 2 -->
+                            <div class="achievement-content" id="achievement2">
+                                <img src="~/Images/images/AST-building.png" alt="Achievement 2">
+                                <h3>Company Achievement 2</h3>
+                                <p>Details about another achievement. This includes more information about the company's growth or progress.</p>
+                            </div>
                         </div>
-                        <!-- Prev and Next Button for Manual Navigation -->
-                        @*<button class="prev-btn" onclick="prevImage()">&#10094;</button>
-                        <button class="next-btn" onclick="nextImage()">&#10095;</button>*@
                     </div>
 
-                    <!-- Title and Description for Company Achievement -->
-                    <div class="achievement-info">
-                        <h3 id="achievement-title">Company Achievement 1</h3>
-                        <p id="achievement-description">Details about the achievement. This can include awards or recognitions received by the company.</p>
-                    </div>
-                    <button class="next-btn" onclick="nextImage()">&#10095;</button>
+                    <!-- Next Button -->
+                    <button class="next-btn" onclick="nextAchievement()">&#10095;</button>
                 </div>
             </div>
         </section>
  
-        <!-- Employee Achievements Section -->
+        @*Employee Achievements Section*@
         <section class="employee-achievements-section">
             <h2>Employee Achievements</h2>
             <div class="achievement-cards-container">
@@ -109,7 +113,7 @@
                     <h3>Top Performer Award</h3>
                     <p>Employee Name: Jane Smith. A brief description of their outstanding performance.</p>
                 </div>
-            </div> 
+            </div>
         </section>
 
         <!-- Competition Winners Section -->

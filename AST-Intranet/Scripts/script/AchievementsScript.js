@@ -46,53 +46,28 @@
         // Initially enable hover effect only when sidebar is closed
         sidebar.addEventListener('mouseenter', hoverOpen);
         sidebar.addEventListener('mouseleave', hoverClose);
-
-
+        ASTSF- 2625
         let currentIndex = 0;
-        const images = document.querySelectorAll('.slider-images img'); // Select all images in the slider
-        const totalImages = images.length;
-        const titleElement = document.getElementById('achievement-title'); // Title element
-        const descriptionElement = document.getElementById('achievement-description'); // Description element
+        const achievementContents = document.querySelectorAll('.achievement-content'); // Select all achievement contents
+        const totalAchievements = achievementContents.length;
 
-        const achievements = [
-            {
-                title: 'Company Achievement 1',
-                description: 'Details about the achievement. This can include awards or recognitions received by the company.',
-                imageSrc: '~/Images/images/AST bg.jfif'
-            },
-            {
-                title: 'Company Achievement 2',
-                description: 'Details about another achievement. This includes more information about the company\'s growth or progress.',
-                imageSrc: '~/Images/images/AST-building.png'
-            }
-        ];
-
-        function showImage(index) {
-            // Hide all images
-            images.forEach((img) => {
-                img.classList.remove('active');
-            });
-
-            // Show the current image
-            images[index].classList.add('active');
-
-            // Update the title and description based on current index
-            titleElement.textContent = achievements[index].title;
-            descriptionElement.textContent = achievements[index].description;
+        function showAchievement(index) {
+            const slider = document.querySelector('.slider-content');
+            slider.style.transform = `translateX(-${index * 100}%)`; // Slide to the correct achievement
         }
 
-        function nextImage() {
-            currentIndex = (currentIndex + 1) % totalImages; // Loop back to the first image when at the end
-            showImage(currentIndex);
+        function nextAchievement() {
+            currentIndex = (currentIndex + 1) % totalAchievements; // Loop back to the first achievement when at the end
+            showAchievement(currentIndex);
         }
 
-        function prevImage() {
-            currentIndex = (currentIndex - 1 + totalImages) % totalImages; // Loop back to the last image when at the beginning
-            showImage(currentIndex);
+        function prevAchievement() {
+            currentIndex = (currentIndex - 1 + totalAchievements) % totalAchievements; // Loop back to the last achievement when at the beginning
+            showAchievement(currentIndex);
         }
 
         // Automatically slide every 5 seconds
-        setInterval(nextImage, 5000);
+        setInterval(nextAchievement, 3000);
 
-        // Initialize the first image
-        showImage(currentIndex);
+        // Initialize the first achievement
+        showAchievement(currentIndex);

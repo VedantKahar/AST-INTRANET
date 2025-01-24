@@ -178,100 +178,95 @@
             margin-bottom: 20px;
         }
 
-/* General Styling */
-section {
-    margin-bottom: 40px;
-}
-
-.achievement-cards-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.achievement-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-    max-width: 600px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Image Slider Styling */
-.image-slider {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    height: 350px; /* Set height for the slider */
-}
-
-.slider-images {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-    .slider-images img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-        .slider-images img.active {
-            opacity: 1;
+        /* General Styling */
+        section {
+            margin-bottom: 40px;
         }
 
-/* Prev and Next Button Styling */
-.prev-btn, .next-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-    z-index: 10;
-}
+        .achievement-cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
 
-.prev-btn {
-    left: 10px;
-}
+        .achievement-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            overflow: hidden;
+        }
 
-.next-btn {
-    right: 10px;
-}
+        /* Image Slider Styling */
+        .image-slider {
+            position: relative;
+            width: 100%;
+            height: 300px; /* Set a fixed height for the slider */
+            overflow: hidden;
+        }
 
-    .prev-btn:hover, .next-btn:hover {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
+        .slider-content {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
 
-/* Title and Description Styling */
-.achievement-info h3 {
-    font-size: 1.6em;
-    margin-top: 15px;
-    color: #34495e;
-}
+        .achievement-content {
+            min-width: 100%;
+            transition: opacity 1s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.achievement-info p {
-    font-size: 1em;
-    color: #7f8c8d;
-    margin-top: 10px;
-}
+        .achievement-content img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
 
-.achievement-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
+        .achievement-content h3 {
+            font-size: 1.6em;
+            color: #34495e;
+            margin-top: 15px;
+        }
 
+        .achievement-content p {
+            font-size: 1em;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
 
-    
-        
+        /* Prev and Next Button Styling */
+        .prev-btn, .next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .prev-btn {
+            left: 10px;
+        }
+
+        .next-btn {
+            right: 10px;
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+  
         /* Competition Winners Section */
 
         /* box for the contents*/
